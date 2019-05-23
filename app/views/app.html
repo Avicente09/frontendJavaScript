@@ -1,0 +1,86 @@
+<div layout="row">
+    <div layout="vertical" style="height: 100vh;">
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"
+            md-whiteframe="4" flex>
+
+            <md-content md-scroll-y layout="column" flex>
+                <md-sidemenu locked="true">
+
+                    <md-sidemenu-group>
+                        <md-toolbar>
+                            <div id="logoWraper" class="parent" layout="column" flex>
+                                <img src="app/img/iconos/IconoSeguridad.png">
+                            </div>
+                        </md-toolbar>
+                        <md-sidemenu-content ng-repeat="element in vm.navbarElements" md-icon="{{element.icon}}"
+                            md-heading="{{element.name}}" md-arrow="{{element.submenuItems}}"
+                            ng-click="vm.clickElement(element)">
+                            <md-sidemenu-button ng-if="element.submenuItems"
+                                ng-repeat="subelement in element.submenuItems" ui-sref="{{subelement.state}}">
+                                {{subelement.name}}</md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
+                </md-sidemenu>
+            </md-content>
+        </md-sidenav>
+
+    </div>
+
+    <div flex class="wrapper">
+        <div layout="column" flex>
+
+            <div class="header">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <md-button class="md-icon-button" aria-label="Side Panel" ng-click="vm.openSideNavPanel()"
+                            hide-gt-md>
+                            <md-tooltip>Open Side Panel</md-tooltip>
+                            <md-icon class="material-icons">menu</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button" ng-click="vm.regresarDashboard()" aria-label="Icon">
+                            <md-tooltip>Inicio</md-tooltip>
+                            <md-icon class="material-icons">home</md-icon>
+                        </md-button>
+
+                        <h2>
+                            <span ng-repeat="route in vm.getNavigationRoute()">
+                                <md-icon ng-if="$index > 0" class="material-icons">keyboard_arrow_right</md-icon>
+                                {{route}}
+                            </span>
+                        </h2>
+                        <span flex></span>
+                        <md-button class="md-icon-button" ng-click="vm.regresarDashboard()" aria-label="User">
+                            <md-tooltip>Home</md-tooltip>
+                            <md-icon class="material-icons">account_circle</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button" ng-click="vm.cerrarSesion()" aria-label="Messages">
+                            <md-tooltip>Cerrar Sesión</md-tooltip>
+                            <md-icon class="material-icons ">no_encryption</md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+            </div>
+
+            <div class="container-fluid content" layout-padding>
+                <div ui-view="" autoscroll="false"></div>
+            </div>
+        </div>
+
+        <footer class="footer" md-colors="{background: 'seguridad'}">
+            <!--{{vm.poweredBy}}-->
+
+            <center>
+
+                <br />
+                <center>
+                    <span class="footer-project-name">{{vm.projectName}} || Usuario:
+                        {{vm.user[0].idUsuario.usuario}}</span>
+                </center>
+                <br />
+
+            </center>
+
+        </footer>
+
+    </div>
+</div>

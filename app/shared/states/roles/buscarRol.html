@@ -1,0 +1,298 @@
+<div>
+    <br/>
+    <center>
+        <h3>Roles</h3>
+    </center>
+</div>
+
+<md-card ng-show="!vm.selected.length >0" class="md-whiteframe-10dp">
+
+    <md-toolbar md-colors="{background: 'seguridad-200'}">
+        <form name="vm.buscarForm" ng-submit="vm.buscarForm.$valid && vm.buscar()" autocomplete="off">
+            <div class="md-toolbar-tools">
+                <md-input-container flex style="padding-top:18px">
+                    <label>&nbsp;</label>
+                    <input name="consulta" ng-model="vm.strConsulta" placeholder="Ingresa búsqueda" required>
+                    <div ng-messages="vm.buscarForm.consulta.$error" ng-show="vm.buscarForm.consulta.$dirty">
+                        <div ng-message="required">Ingresa al menos un caracter!</div>
+                    </div>
+                </md-input-container>
+                <md-button class="md-icon-button" aria-label="Buscar" type="submit" ng-submit="vm.buscar()">
+                    <md-tooltip>Búscar</md-tooltip>
+                    <md-icon class="material-icons md-36 md-dark">search</md-icon>
+                </md-button>
+            </div>
+        </form>
+
+    </md-toolbar>
+
+    <md-card-content ng-class="{' whirl line': vm.isLoading() }">
+
+        <center>
+            <md-progress-circular md-mode="indeterminate" ng-show="vm.isLoading()" md-diameter="70"></md-progress-circular>
+        </center>
+
+        <md-table-container ng-show="vm.showPagineo">
+            <table md-table md-row-select="true" multiple="false" ng-model="vm.selected" md-progress="promise">
+                <thead md-head md-order="miOrden" md-on-reorder="orderLists">
+                    <tr md-row>
+
+                        <th md-column md-order-by="nombreAplicacion">
+                            <center> Nombre </center>
+                        </th>
+                        <th md-column md-order-by="descripcion">
+                            <center> Descripción </center>
+                        </th>
+                        <th md-column md-order-by="urlAcceso">
+                            <center> Url </center>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="p" md-auto-select="true" ng-click="vm.aplicacionSeleccionada(p)" ng-repeat="p in vm.listadoConsulta  | orderBy: miOrden | limitTo: vm.limit : (vm.page -1) * vm.limit">
+
+                        <td md-cell>
+                            <center> {{p.nombreAplicacion}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.descripcion}} </center>
+                        </td>
+                        <td md-cell>
+                            <center>
+                                {{p.urlAcceso}}
+                            </center>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <center>
+            <h5 ng-show="!vm.listadoConsulta.length > 0">{{vm.mensajeBusqueda}}</h5>
+        </center>
+        <md-table-pagination ng-show="vm.showPagineo" md-limit="vm.limit" md-page="vm.page" md-limit-options="vm.limitOptions" md-total="{{vm.listadoConsulta.length}}"
+            md-on-paginate="orderLists" md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
+
+        </md-toolbar>
+
+    </md-card-content>
+
+</md-card>
+
+<md-card ng-app="ngAnimate" ng-show="vm.selected[0] && !vm.selectedRol" class="md-whiteframe-10dp">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-input-container flex style="padding-top:18px">
+                <h2 class="md-flex">{{vm.selected[0].nombreAplicacion}}</h2>
+            </md-input-container>
+            <md-button class="md-icon-button" style="padding-right:60px; padding-bottom:40px" ng-click="vm.regresarSeleccionAplicacion()"
+                aria-label="Nuevo">
+                <md-tooltip>Regresar Búsqueda</md-tooltip>
+                <md-icon class="material-icons md-36 md-light ">arrow_back</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" style="padding-right:60px; padding-bottom:40px" ng-click="vm.nuevo()" aria-label="Nuevo">
+                <md-tooltip>Nuevo</md-tooltip>
+                <md-icon class="material-icons md-36 md-light ">add_circle</md-icon>
+            </md-button>
+
+        </div>
+
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-toolbarRoles'}" ng-hide="vm.showBusqueda">
+        <div class="md-toolbar-tools">
+            <span>Roles {{vm.selected[0].nombreAplicacion}}</span>
+            <div flex></div>
+            <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnLista(); focusInput=true">
+                <md-tooltip>Filtro</md-tooltip>
+                <md-icon class="material-icons md-36 md-light " >filter_list</md-icon>
+            </md-button>
+
+
+        </div>
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-100'}" ng-hide="!vm.showBusqueda">
+        <form name="vm.buscarFormLista" ng-submit="vm.buscarFormLista.$valid && vm.buscar()" autocomplete="off">
+            <div class="md-toolbar-tools">
+                <md-icon class="material-icons" md-colors="{color: 'seguridad-400'}" ng-click="vm.editar(p)">search</md-icon>
+                <md-input-container flex style="padding-top:18px">
+                    <label>&nbsp;</label>
+                    <input name="consulta" ng-model="vm.searchText" placeholder="Ingresa búsqueda" focus-me="focusInput">
+                </md-input-container>
+                <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnLista()">
+                    <md-icon md-colors="{color: 'seguridad-500'}">close</md-icon>
+                </md-button>
+            </div>
+        </form>
+
+    </md-toolbar>
+
+    <md-card-content ng-class="{' whirl line': vm.isLoading() }">
+
+        <md-table-container ng-show="vm.showPagineoComponente">
+            <table md-table md-row-select="false" multiple="false" ng-model="vm.selectedRol" md-progress="promise">
+                <thead md-head md-order="miOrdenComponente" md-on-reorder="orderListsComponente">
+                    <tr md-row>
+                        <th md-column md-numeric>
+                            <center> Opciones </center>
+                        </th>
+                        <th md-column md-order-by="nombreAplicacion">
+                            <center> Nombre </center>
+                        </th>
+                        <th md-column md-order-by="descripcion">
+                            <center> Descripción </center>
+                        </th>
+                        <th md-column md-order-by="urlAcceso">
+                            <center> Ver componentes </center>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="p" md-auto-select="false" ng-repeat="p in vm.rolesList | filter:vm.searchText | orderBy: miOrdenComponente | limitTo: vm.limitComponente : (vm.page -1) * vm.limitComponente">
+                        <td md-cell>
+                            <center>
+                                <md-button class="md-icon-button" aria-label="Editar">
+                                    <md-tooltip>Eliminar</md-tooltip>
+                                    <md-icon class="material-icons" ng-click="vm.eliminar(p)">delete_forever</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="Editar">
+                                    <md-tooltip>Editar</md-tooltip>
+                                    <md-icon class="material-icons" ng-click="vm.editar(p)">border_color</md-icon>
+                                </md-button>
+                            </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.idRol.nombreRol}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.idRol.descripcion}} </center>
+                        </td>
+                        <td md-cell>
+                            <center>
+                                <md-button ng-click="vm.seleccionarRol(p)">
+                                    <md-icon class="material-icons">format_list_bulleted</md-icon> Ver/Asignar Componentes</md-button>
+                            </center>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <center>
+            <h5 ng-show="!vm.rolesList.length > 0">{{vm.mensajeBusqueda}}</h5>
+        </center>
+        <md-table-pagination ng-show="vm.showPagineoComponente" md-limit="vm.limitComponente" md-page="vm.pageComponente" md-limit-options="vm.limitOptionsComponente"
+            md-total="{{vm.rolesList.length}}" md-on-paginate="orderListsComponente" md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
+
+    </md-card-content>
+</md-card>
+
+
+<md-card ng-app="ngAnimate" ng-show="vm.selectedRol" class="md-whiteframe-10dp">
+
+    <md-toolbar >
+        <div class="md-toolbar-tools">
+            <md-input-container flex style="padding-top:18px">
+                <h2 class="md-flex">Rol: {{vm.selectedRol.idRol.nombreRol}}</h2>
+            </md-input-container>
+            <md-button class="md-icon-button" style="padding-right:60px; padding-bottom:40px" ng-click="vm.regresarSeleccionRoles()"
+                aria-label="Nuevo">
+                <md-tooltip>Regresar selección Roles</md-tooltip>
+                <md-icon class="material-icons md-36 md-light ">arrow_back</md-icon>
+            </md-button>
+        </div>
+
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-toolbarComponentes'}" ng-hide="vm.showBusquedaComponentes">
+        <div class="md-toolbar-tools">
+            <span>Componentes de Rol: {{vm.selectedRol.idRol.nombreRol}} </span>
+            <div flex></div>
+            <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnListaComponentes(); focusInput=true">
+                <md-tooltip>Filtro</md-tooltip>
+                <md-icon class="material-icons md-36 md-light " >filter_list</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-100'}" ng-hide="!vm.showBusquedaComponentes">
+        <form name="vm.buscarFormLista" ng-submit="vm.buscarFormLista.$valid && vm.buscar()" autocomplete="off">
+            <div class="md-toolbar-tools">
+                <md-icon class="material-icons" md-colors="{color: 'seguridad-400'}" ng-click="vm.editar(p)">search</md-icon>
+                <md-input-container flex style="padding-top:18px">
+                    <label>&nbsp;</label>
+                    <input name="consulta" ng-model="vm.searchTextComponentes" placeholder="Ingresa búsqueda" focus-me="focusInput">
+                </md-input-container>
+                <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnListaComponentes()">
+                    <md-icon md-colors="{color: 'seguridad-500'}">close</md-icon>
+                </md-button>
+            </div>
+        </form>
+
+    </md-toolbar>
+
+    <md-card-content ng-class="{' whirl line': vm.isLoading() }">
+
+        <md-table-container ng-show="vm.showPagineoRolComponente">
+            <table md-table md-row-select="false" multiple="true" ng-model="vm.selected" md-progress="promise">
+                <thead md-head md-order="miOrdenRolComponente" md-on-reorder="orderListsRolComponente">
+                    <tr md-row>
+
+                        <th md-column md-order-by="idComponente">
+                            <center> Id </center>
+                        </th>
+                        <th md-column md-order-by="idComponente.nombreComponente">
+                            <center> Nombre </center>
+                        </th>
+                        <th md-column md-order-by="idComponente.nodoPadrre">
+                            <center> Nodo Padre </center>
+                        </th>
+                        <th md-column md-order-by="idComponente.nodoPadrre">
+                            <center> Activado </center>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="p" md-auto-select="true" ng-repeat="p in vm.selectedRol.idRol.ttSaRolComponenteList | filter:vm.searchTextComponentes | orderBy: miOrdenRolComponente | limitTo: vm.limitRolComponente : (vm.page -1) * vm.limitRolComponente">
+
+                        <td md-cell>
+                            <center> {{p.idComponente.idComponente}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.idComponente.nombreComponente}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.idComponente.nodoPadre}} </center>
+                        </td>
+                        <td md-cell>
+                            <center>
+
+                                <md-switch md-no-ink ng-model="p.activo" aria-label="No Ink Effects"class="md-warn">
+                                    <p ng-if="p.activo == true">Estado: Activado</p>
+                                    <p ng-if="p.activo == false">Estado: Desactivado</p>
+                                </md-switch>
+                            </center>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <center>
+            <h5 ng-show="!vm.selectedRol.idRol.ttSaRolComponenteList.length > 0">{{vm.mensajeBusqueda}}</h5>
+        </center>
+        <md-table-pagination ng-show="vm.showPagineoRolComponente" md-limit="vm.limitRolComponente" md-page="vm.pageRolComponente"
+            md-limit-options="vm.limitOptionsRolComponente" md-total="{{vm.selectedRol.idRol.ttSaRolComponenteList.length}}"
+            md-on-paginate="orderListsRolComponente" md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
+
+    </md-card-content>
+
+    <div layout="row" layout-align="center" flex>
+
+        <md-button ng-click="vm.guardarRolComponente()" class=" md-raised" ng-disabled="!vm.componentesList.length > 0">
+            <md-icon class="material-icons">save</md-icon>
+            Guardar Configuración
+        </md-button>
+    </div>
+</md-card>

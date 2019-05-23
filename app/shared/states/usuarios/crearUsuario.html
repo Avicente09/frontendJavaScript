@@ -1,0 +1,137 @@
+<div>
+    <br/>
+    <center>
+        <h3>Creacion de Usuarios </h3>
+    </center>
+</div>
+
+<md-card class="md-whiteframe-10dp">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <span>Usuarios</span>
+        </div>
+    </md-toolbar>
+
+    <!--================================Contenido del componente Card =============================================================================-->
+    <form name="vm.guardarForm" noValidate ng-submit="vm.guardarForm.$valid && vm.save()" autocomplete="off">
+        <md-card-content ng-class="{'whirl line': vm.isLoading() }">
+
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Primer Nombre</label>
+                    <md-icon class="material-icons">account_circle</md-icon>
+                    <input name="primer_nombre" ng-model="vm.usuario.idPersona.primerNombre" required >
+                    <div class="errors" ng-messages="vm.guardarForm.primer_nombre.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Segundo Nombre</label>
+                    <md-icon class="material-icons">account_circle</md-icon>
+                    <input name="segundo_nombre" ng-model="vm.usuario.idPersona.segundoNombre">
+                </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Primer Apellido</label>
+                    <md-icon class="material-icons">account_circle</md-icon>
+                    <input name="primer_apellido" ng-model="vm.usuario.idPersona.primerApellido" required>
+                    <div class="errors" ng-messages="vm.guardarForm.primer_apellido.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Segundo Apellido</label>
+                    <md-icon class="material-icons">account_circle</md-icon>
+                    <input name="segundo_apellido" ng-model="vm.usuario.idPersona.segundoApellido">
+                </md-input-container>
+
+            </div>
+            <div layout-gt-sm="row">
+
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Apellido Casada</label>
+                    <md-icon class="material-icons">account_circle</md-icon>
+                    <input name="apellido_casada" ng-model="vm.usuario.idPersona.apellidoCasada">
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Correo Electronico Institucional</label>
+                    <md-icon class="material-icons">email</md-icon>
+                    <input name="correoElectronico" ng-model="vm.usuario.correoElectronico" required>
+                    <div class="errors" ng-messages="vm.guardarForm.correoElectronico.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+
+            </div>
+            <div layout-gt-sm="row">
+
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Telefono</label>
+                    <md-icon class="material-icons">phone</md-icon>
+                    <input name="telefono" ng-model="vm.usuario.telefono" required>
+                    <div class="errors" ng-messages="vm.guardarForm.telefono.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Fecha Nacimiento</label>
+                    <md-datepicker ng-model="vm.usuario.idPersona.fechaNacimiento"></md-datepicker>
+                </md-input-container>
+            </div>
+
+
+
+        </md-card-content>
+
+
+        <md-toolbar class="md-table-toolbar">
+            <div class="md-toolbar-tools">
+                <span>Datos para Login</span>
+            </div>
+        </md-toolbar>
+
+        <md-card-content>
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Usuario</label>
+                    <md-icon class="material-icons">person</md-icon>
+                    <input name="user" ng-model="vm.usuario.usuario" required>
+                    <div class="errors" ng-messages="vm.guardarForm.user.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="">
+                    <label>Password</label>
+                    <md-icon class="material-icons">remove_red_eye</md-icon>
+                    <input type="password" ng-model="vm.usuario.password" ng-trim="true" required/>
+                    <div class="errors" ng-messages="vm.guardarForm.password.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <center>
+                <md-progress-circular md-mode="indeterminate" ng-show="vm.isLoading()" md-diameter="70"></md-progress-circular>
+            </center>
+            <div layout="row" layout-align="end" flex>
+                <md-button ng-click="vm.regresar()" class=" md-raised">Regresar</md-button>
+                <md-button ng-submit="vm.save()" md-colors="{background: 'seguridad-50'}" class=" md-raised" type="submit">Guardar</md-button>
+            </div>
+
+
+
+
+
+        </md-card-content>
+    </form>
+    <!--================================================Footer de compenente Card================================================-->
+
+    <md-card-footer ng-class="{'whirl line': vm.isLoading() }">
+
+    </md-card-footer>
+
+</md-card>

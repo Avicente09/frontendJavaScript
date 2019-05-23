@@ -1,0 +1,102 @@
+<div layout="row">
+    <div layout="vertical" style="height: 100vh;">
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" flex md-is-open="false">
+            <!-- md-is-locked-open="$mdMedia('gt-md')"  -->
+            <md-content md-scroll-y layout="column" flex>
+                <md-sidemenu locked="true">
+
+                    <md-sidemenu-group>
+                        <md-toolbar md-colors="{background: 'seguridad-colorBaseDashborad'}">
+                            <div id="logoWraperDashboard" class="parent" layout="column" flex>
+                                <img src="app/css/images/logoSalud2.png">
+                            </div>
+                        </md-toolbar>
+                        <md-sidemenu-content ng-repeat="element in vm.navbarElements" md-icon="{{element.icon}}" md-heading="{{element.name}}" md-arrow="{{element.submenuItems}}"
+                            ng-click="vm.clickElement(element)">
+                            <md-sidemenu-button ng-if="element.submenuItems" ng-repeat="subelement in element.submenuItems" ui-sref="{{subelement.state}}">{{subelement.name}}</md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
+                </md-sidemenu>
+            </md-content>
+        </md-sidenav>
+
+    </div>
+
+    <div flex class="wrapper">
+        <div layout="column" flex>
+
+            <div class="header">
+                <md-toolbar class="md-mini" md-colors="{background: 'seguridad-colorBaseDashborad'}">
+                    <div layout="row" layout-align="center center" class="md-toolbar-tools">
+                        <md-button class="md-icon-button" aria-label="Side Panel" ng-click="vm.openSideNavPanel()" hide-gt-md>
+                            <md-tooltip>Open Side Panel</md-tooltip>
+                            <md-icon class="material-icons ">menu</md-icon>
+                        </md-button>
+                        <!-- <md-button class="md-icon-button" aria-label="Icon">
+                            <md-tooltip>Inicio</md-tooltip>
+                            <md-icon class="material-icons">home</md-icon>
+                        </md-button> -->
+
+                        <h2>
+                            <span ng-repeat="route in vm.getNavigationRoute()">
+                                <md-icon ng-if="$index > 0" class="material-icons">keyboard_arrow_right</md-icon>
+                                {{route}}
+                            </span>
+                        </h2>
+                        <span flex></span>
+
+                        <md-button class="md-fab md-mini" md-colors="{background: 'seguridad-colorBaseDashborad'}" aria-label="Use Android">
+                            <md-tooltip>Home</md-tooltip>
+                            <md-icon class="material-icons  md-24" style="color: greenyellow;">account_circle</md-icon>
+                        </md-button>
+
+
+                        <md-button class="md-fab md-mini md-warn" aria-label="Messages" ng-click="vm.cerrarSesion()">
+                            <md-tooltip>Cerrar Sesión</md-tooltip>
+                            <md-icon class="material-icons md-24">no_encryption</md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+            </div>
+
+            <div class="container-fluid content" layout-padding>
+
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+
+                    <md-card ng-click="vm.seleccionarAplicacion(thumbnail)" ng-repeat="thumbnail in vm.thumbnails" style="height:300px;width:200px; float:left; margin-right:20px"
+                        md-colors="{background: 'seguridad-fondoThumbnailsAplicaciones'}">
+                        {{thumbnail.id}}
+
+                        <div class="photo" style="text-align: center">
+                            <img src='{{thumbnail.urlImagen}}' alt="Avatar">
+                        </div>
+                        <h3 style="text-align:center;vertical-align:central">{{thumbnail.name}}</h3>
+
+                        <div>
+                            <h4>{{thumnail.descripcion}}</h4>
+                            <h4>URL: {{thumbnail.url}}</h4>
+                        </div>
+                    </md-card>
+
+                </section>
+
+            </div>
+        </div>
+
+        <footer class="footer" md-colors="{background: 'seguridad-colorBaseDashborad'}">
+            <!--{{vm.poweredBy}}-->
+
+            <center>
+
+                <br/>
+                <center>
+                    <span class="footer-project-name">{{vm.projectName}}</span>
+                </center>
+                <br/>
+
+            </center>
+
+        </footer>
+
+    </div>
+</div>

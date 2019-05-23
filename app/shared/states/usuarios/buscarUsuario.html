@@ -1,0 +1,104 @@
+<div>
+    <br/>
+    <center>
+        <h3>Administracion de Usuarios</h3>
+    </center>
+</div>
+
+
+<md-card class="md-whiteframe-10dp">
+
+    <md-toolbar md-colors="{background: 'seguridad-200'}">
+        <form name="vm.buscarForm"  ng-submit="vm.buscarForm.$valid && vm.buscar()" autocomplete="off">
+            <div class="md-toolbar-tools">
+                <md-input-container flex style="padding-top:18px">
+                    <label>&nbsp;</label>
+                    <input name="consulta" ng-model="vm.strConsulta" placeholder="Ingresa búsqueda" required>
+                    <div ng-messages="vm.buscarForm.consulta.$error" ng-show="vm.buscarForm.consulta.$dirty">
+                        <div ng-message="required">Ingresa al menos un caracter!</div>
+                    </div>
+                </md-input-container>
+                <md-button class="md-icon-button" aria-label="Buscar" type="submit" ng-submit="vm.buscar()">
+                    <md-tooltip>Búscar</md-tooltip>
+                    <md-icon class="material-icons md-36 md-dark">search</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" style="padding-right:60px; padding-bottom:40px" ng-click="vm.nuevo()" aria-label="Nuevo">
+                    <md-tooltip>Nuevo</md-tooltip>
+                    <md-icon class="material-icons md-36 md-dark ">add_circle</md-icon>
+                </md-button>
+            </div>
+        </form>
+
+    </md-toolbar>
+
+
+
+    <!--================================Contenido del componente Card =======================================================================-->
+    <md-card-content ng-class="{' whirl line': vm.isLoading() }">
+
+        <center>
+            <md-progress-circular md-mode="indeterminate" ng-show="vm.isLoading()" md-diameter="70"></md-progress-circular>
+        </center>
+
+        <md-table-container ng-show="vm.showPagineo">
+            <table md-table md-row-select multiple ng-model="selected" >
+                <thead md-head md-head md-order="miOrden" md-on-reorder="orderLists">
+                    <tr md-row>
+                        <th md-column md-numeric>
+                            <center> Opciones </center>
+                        </th>
+                        <th md-column md-numeric>
+                                <center> Usuario </center>
+                            </th>
+                        <th md-column md-order-by="nombreAplicacion">
+                            <center> Primer Nombre  </center>
+                        </th>
+                        <th md-column md-order-by="descripcion">
+                            <center> Primer Apellido </center>
+                        </th>
+                    </tr>
+                </thead>
+                
+                <tbody md-body>
+                    <tr md-row md-select="p" ng-repeat="p in vm.listadoConsulta  | orderBy: miOrden | limitTo: vm.limit : (vm.page -1) * vm.limit">
+                        <td md-cell>
+                            <center>
+                                <md-button class="md-icon-button" aria-label="Editar">
+                                    <md-tooltip>Eliminar</md-tooltip>
+                                    <md-icon class="material-icons" ng-click="vm.eliminar(p)">delete_forever</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="Editar">
+                                    <md-tooltip>Editar</md-tooltip>
+                                    <md-icon class="material-icons" ng-click="vm.editar(p)">border_color</md-icon>
+                                </md-button>
+                            </center>
+                        </td>
+                        <td md-cell>
+                                <center> {{p.usuario}} </center>
+                            </td>  
+                        <td md-cell>
+                            <center> {{p.idPersona.primerNombre}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.idPersona.primerApellido}} </center>
+                        </td>                        
+                     
+
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <center>
+            <h5 ng-show="!vm.listadoConsulta.length > 0">{{vm.mensajeBusqueda}}</h5>
+        </center>
+        <md-table-pagination ng-show="vm.showPagineo" md-limit="vm.limit" md-page="vm.page" md-limit-options="vm.limitOptions"
+        md-total="{{vm.listadoConsulta.length}}" md-on-paginate="orderLists" md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
+
+    </md-card-content>
+
+    <!--================================================Footer de compenente Card================================================-->
+
+    <md-card-footer>
+
+    </md-card-footer>
+</md-card>

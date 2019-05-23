@@ -1,0 +1,314 @@
+<div>
+    <br/>
+    <center>
+        <h3>Asigna Aplicación/Rol</h3>
+    </center>
+</div>
+
+
+<md-card class="md-whiteframe-10dp" ng-show="!vm.selectedUsuario">
+
+    <md-toolbar md-colors="{background: 'seguridad-200'}">
+        <form name="vm.buscarForm" ng-submit="vm.buscarForm.$valid && vm.buscar()" autocomplete="off">
+            <div class="md-toolbar-tools">
+                <md-input-container flex style="padding-top:18px">
+                    <label>&nbsp;</label>
+                    <input name="consulta" ng-model="vm.strConsulta" placeholder="Busca un usuario" required>
+                    <div ng-messages="vm.buscarForm.consulta.$error" ng-show="vm.buscarForm.consulta.$dirty">
+                        <div ng-message="required">Ingresa al menos un caracter!</div>
+                    </div>
+                </md-input-container>
+                <md-button class="md-icon-button" aria-label="Buscar" type="submit" ng-submit="vm.buscar()">
+                    <md-tooltip>Búscar</md-tooltip>
+                    <md-icon class="material-icons md-36 md-dark">search</md-icon>
+                </md-button>
+            </div>
+        </form>
+
+    </md-toolbar>
+
+
+
+    <!--================================Contenido del Aplicacion Card =======================================================================-->
+    <md-card-content ng-class="{' whirl line': vm.isLoading() }" ng-show="vm.showPagineo">
+
+        <center>
+            <md-progress-circular md-mode="indeterminate" ng-show="vm.isLoading()" md-diameter="70"></md-progress-circular>
+        </center>
+
+        <md-table-container ng-show="vm.showPagineo">
+            <table md-table md-row-select multiple="false" ng-model="vm.selected">
+                <thead md-head md-head md-order="miOrden" md-on-reorder="orderLists">
+                    <tr md-row>
+
+                        <th md-column md-numeric>
+                            <center> Usuario </center>
+                        </th>
+                        <th md-column md-order-by="nombreAplicacion">
+                            <center> Nombre Completo </center>
+                        </th>
+
+                        <th md-column md-order-by="fechaCreacion">
+                            <center> Fecha Creación </center>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody md-body>
+                    <tr md-row md-select="p" ng-click="vm.usuarioSeleccionado(p)" md-auto-select="true" ng-repeat="p in vm.listadoConsulta  | orderBy: miOrden | limitTo: vm.limit : (vm.page -1) * vm.limit">
+
+                        <td md-cell>
+                            <center> {{p.usuario}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.idPersona.primerNombre}} {{p.idPersona.segundoNombre}} {{p.idPersona.primerApellido}} {{p.idPersona.segundoApellido}}
+                                {{p.idPersona.apllidoCasada}}
+                            </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.fechaCreacion | date: 'dd/MM/yyyy hh:mm:ss a'}} </center>
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <center>
+            <h5 ng-show="!vm.listadoConsulta.length > 0">{{vm.mensajeBusqueda}}</h5>
+        </center>
+        <md-table-pagination ng-show="vm.showPagineo" md-limit="vm.limit" md-page="vm.page" md-limit-options="vm.limitOptions" md-total="{{vm.listadoConsulta.length}}"
+            md-on-paginate="orderLists" md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
+
+    </md-card-content>
+
+    <!--================================================Footer de compenente Card================================================-->
+
+    <md-card-footer>
+
+    </md-card-footer>
+</md-card>
+
+<md-card ng-app="ngAnimate" class="md-whiteframe-10dp" ng-show="vm.selectedUsuario && !vm.selectedAplicacion">
+    <!-- ng-show=" vm.selectedUsuario && !vm.selectedRol" -->
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-input-container flex style="padding-top:18px">
+                <h2 class="md-flex">Usuario: {{vm.selectedUsuario.usuario}}</h2>
+            </md-input-container>
+            <md-button class="md-icon-button" style="padding-right:60px; padding-bottom:40px" ng-click="vm.regresarSeleccionUsuario()"
+                aria-label="Nuevo">
+                <md-tooltip>Regresar Búsqueda</md-tooltip>
+                <md-icon class="material-icons md-36 md-light ">arrow_back</md-icon>
+            </md-button>
+           
+        </div>
+
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-toolbarRoles'}" ng-hide="vm.showBusqueda">
+        <div class="md-toolbar-tools">
+            <span>Listado Aplicaciones</span>
+            <div flex></div>
+            <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnLista(); focusInput=true">
+                <md-tooltip>Filtro</md-tooltip>
+                <md-icon class="material-icons md-36 md-light ">filter_list</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-100'}" ng-hide="!vm.showBusqueda">
+        <form name="vm.buscarFormLista" ng-submit="vm.buscarFormLista.$valid && vm.buscar()" autocomplete="off">
+            <div class="md-toolbar-tools">
+                <md-icon class="material-icons" md-colors="{color: 'seguridad-400'}" ng-click="vm.editar(p)">search</md-icon>
+                <md-input-container flex style="padding-top:18px">
+                    <label>&nbsp;</label>
+                    <input name="consulta" ng-model="vm.searchText" placeholder="Ingresa búsqueda" focus-me="focusInput">
+                </md-input-container>
+                <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnLista()">
+                    <md-icon md-colors="{color: 'seguridad-500'}">close</md-icon>
+                </md-button>
+            </div>
+        </form>
+
+    </md-toolbar>
+
+    <md-card-content ng-class="{' whirl line': vm.isLoading() }">
+
+        <md-table-container ng-show="vm.showPagineoAplicacion">
+            <table md-table md-row-select="false" multiple="false" ng-model="vm.selectedRol" md-progress="promise">
+                <thead md-head md-order="miOrdenAplicacion" md-on-reorder="orderListsAplicacion">
+                    <tr md-row>
+                        <th md-column md-numeric>
+                            <center> Id </center>
+                        </th>
+                        <th md-column md-order-by="nombreAplicacion">
+                            <center> Nombre </center>
+                        </th>
+                        <th md-column md-order-by="descripcion">
+                            <center> Descripción </center>
+                        </th>
+                        <th md-column md-order-by="urlAcceso">
+                            <center> Ver Aplicacions </center>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="p" md-auto-select="false" ng-repeat="p in vm.aplicacionesList | filter:vm.searchText | orderBy: miOrdenAplicacion | limitTo: vm.limitAplicacion : (vm.page -1) * vm.limitAplicacion">
+                        <td md-cell>
+                            <center> {{p.idAplicacion}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.nombreAplicacion}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.descripcion}} </center>
+                        </td>
+
+                        <td md-cell>
+                            <center>
+                                <md-button ng-click="vm.aplicacionSeleccionada(p)">
+                                    <md-icon class="material-icons">format_list_bulleted</md-icon> Asignar/Modificar Roles</md-button>
+                            </center>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <center>
+            <h5 ng-show="!vm.rolesList.length > 0">{{vm.mensajeBusqueda}}</h5>
+        </center>
+        <md-table-pagination ng-show="vm.showPagineoAplicacion" md-limit="vm.limitAplicacion" md-page="vm.pageAplicacion" md-limit-options="vm.limitOptionsAplicacion"
+            md-total="{{vm.rolesList.length}}" md-on-paginate="orderListsAplicacion" md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
+
+    </md-card-content>
+</md-card>
+
+
+<!-- ng-show="vm.selectedAplicacion"  -->
+<md-card ng-app="ngAnimate" ng-show="vm.selectedAplicacion" class="md-whiteframe-10dp">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-input-container flex style="padding-top:18px">
+                <h2 class="md-flex">Aplicacion: {{vm.selectedAplicacion.nombreAplicacion}}</h2>
+            </md-input-container>
+            <md-button class="md-icon-button" style="padding-right:60px; padding-bottom:40px" ng-click="vm.regresarSeleccionAplicaciones()"
+                aria-label="Nuevo">
+                <md-tooltip>Regresar selección aplicaciones</md-tooltip>
+                <md-icon class="material-icons md-36 md-light ">arrow_back</md-icon>
+            </md-button>
+        </div>
+
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-toolbarComponentes'}" ng-hide="vm.showBusquedaComponentes">
+        <div class="md-toolbar-tools">
+            <span>Roles de Aplicación: {{vm.selectedRol.idRol.nombreRol}} </span>
+            <div flex></div>
+            <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnListaComponentes(); focusInput=true">
+                <md-tooltip>Filtro</md-tooltip>
+                <md-icon class="material-icons md-36 md-light ">filter_list</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-toolbar md-colors="{background: 'seguridad-100'}" ng-hide="!vm.showBusquedaComponentes">
+        <form name="vm.buscarFormLista" ng-submit="vm.buscarFormLista.$valid && vm.buscar()" autocomplete="off">
+            <div class="md-toolbar-tools">
+                <md-icon class="material-icons" md-colors="{color: 'seguridad-400'}" ng-click="vm.editar(p)">search</md-icon>
+                <md-input-container flex style="padding-top:18px">
+                    <label>&nbsp;</label>
+                    <input name="consulta" ng-model="vm.searchTextComponentes" placeholder="Ingresa búsqueda" focus-me="focusInput">
+                </md-input-container>
+                <md-button style="padding-right:60px; padding-bottom:40px" class="md-icon-button" ng-click="vm.buscarEnListaComponentes()">
+                    <md-icon md-colors="{color: 'seguridad-500'}">close</md-icon>
+                </md-button>
+            </div>
+        </form>
+
+    </md-toolbar>
+
+    <md-card-content ng-class="{' whirl line': vm.isLoading() }">
+
+        <md-table-container ng-show="vm.showPagineoAplicacionRol">
+            <table md-table md-row-select="false" multiple="true" ng-model="vm.selected" md-progress="promise">
+                <thead md-head md-order="miOrdenAplicacionRol" md-on-reorder="orderListsAplicacionRol">
+                    <tr md-row>
+
+
+                        <th md-column md-order-by="idComponente.nombreComponente">
+                            <center> Aplicacion </center>
+                        </th>
+                        <th md-column md-order-by="idComponente.nodoPadrre">
+                            <center> Nombre Rol </center>
+                        </th>
+                        <th md-column md-order-by="idComponente.nodoPadrre">
+                            <center> Componentes </center>
+                        </th>
+                        <th md-column md-order-by="idComponente.nodoPadrre">
+                            <center> Estado </center>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="p" md-auto-select="true" ng-repeat="p in vm.usuarioAplicaionRolList | filter:vm.searchTextComponentes | orderBy: miOrdenAplicacionRol | limitTo: vm.limitAplicacionRol : (vm.page -1) * vm.limitAplicacionRol">
+                        <td md-cell>
+                            <center> {{p.idAplicacionRol.idAplicacion.nombreAplicacion}} </center>
+                        </td>
+                        <td md-cell>
+                            <center> {{p.idAplicacionRol.idRol.nombreRol}} </center>
+                        </td>
+                        <td md-cell>
+                            <v-accordion class="vAccordion--default">
+                                <v-pane expanded="pane.isExpanded">
+                                    <v-pane-header>
+                                        <span>Ver Componentes</span>
+                                    </v-pane-header>
+
+                                    <v-pane-content>
+                                        <ul>
+                                            <li ng-show="sp.activo" ng-repeat="sp in p.idAplicacionRol.idRol.ttSaRolComponenteList">
+                                                <p>{{sp.idComponente.nombreComponente}}</p>
+                                            </li>
+                                        </ul>
+                                    </v-pane-content>
+                                </v-pane>
+
+                            </v-accordion>
+                        </td>
+
+                        <td md-cell>
+                            <center>
+
+                                <md-switch md-no-ink ng-model="p.activo" aria-label="No Ink Effects" class="md-warn">
+                                    <p ng-if="p.activo == true">Estado: Activado</p>
+                                    <p ng-if="p.activo == false">Estado: Desactivado</p>
+                                </md-switch>
+                            </center>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <center>
+            <h5 ng-show="!vm.selectedRol.idRol.usuarioAplicaionRolList.length > 0">{{vm.mensajeBusqueda}}</h5>
+        </center>
+        <md-table-pagination ng-show="vm.showPagineoAplicacionRol" md-limit="vm.limitAplicacionRol" md-page="vm.pageAplicacionRol"
+            md-limit-options="vm.limitOptionsAplicacionRol" md-total="{{vm.selectedRol.idRol.usuarioAplicaionRolList.length}}"
+            md-on-paginate="orderListsAplicacionRol" md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
+
+    </md-card-content>
+
+    <div layout="row" layout-align="center" flex>
+
+        <md-button ng-click="vm.guardarUsuarioAplicacionRol()" class=" md-raised" ng-disabled="!vm.usuarioAplicaionRolList.length > 0">
+            <md-icon class="material-icons">save</md-icon>
+            Guardar Configuración
+        </md-button>
+
+    </div>
+    </br>
+</md-card>

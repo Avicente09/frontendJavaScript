@@ -1,0 +1,57 @@
+<header>
+    Login
+</header>
+<div class="login md-whiteframe-80dp" ng-class="{' whirl line': vm.isLoading() }">
+    </br>
+    <span style="color: black;">
+        <h3>Iniciar Seccion </h3>
+    </span>
+    <br />
+    <br />
+
+    <form md-theme="docs-dark" name="vm.loginForm" ng-submit="vm.loginForm.$valid && vm.hacerLogin()"
+        autocomplete="off">
+
+        <md-input-container class="md-icon-float md-block" flex-gt-sm>
+            <label style="color: black;">Correo Electronico</label>
+            <md-icon class="material-icons">mail</md-icon>
+            <input required type="email" name="clientEmail" ng-model="vm.login.usuario" minlength="10" maxlength="100"
+                ng-pattern="/^.+@.+\..+$/" placeholder="ejemplo@mspas.gob.gt" />
+
+            <div ng-messages="vm.loginForm.clientEmail.$error" role="alert">
+                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                    Tu cuenta debe contener un esquema de email (xxxxx@mspas.gob.gt).
+                </div>
+            </div>
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block" flex-gt-sm>
+            <label style="color: black;">Password / Contraseña</label>
+            <md-icon class="material-icons">vpn_key</md-icon>
+            <input ng-model="vm.login.password" type="password" required>
+            <div ng-messages="vm.loginForm.clientEmail.$error" role="alert">
+                <div ng-message-exp="['required']">
+                    Debe ingresar una contraseña.
+                </div>
+            </div>
+        </md-input-container>
+
+        <div class="form-group">
+            <center>
+                <md-button ng-submit="vm.hacerLogin()" type="submit"
+                    style="background: rgb(3, 169, 245); color: rgb(242, 251, 253);" class="md-raised">Iniciar
+                </md-button>
+            </center>
+        </div>
+
+    </form>
+
+    <md-progress-linear md-mode="indeterminate" ng-disabled="!vm.isLoading()"></md-progress-linear>
+    <piePagina>
+        <a href="#0" style="color: black;">Olvide mi contraseña</a>
+    </piePagina>
+</div>
+
+
+
+<link rel="stylesheet" href="app/css/loginStyle.css">

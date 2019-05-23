@@ -1,0 +1,311 @@
+/*http://drbl.in/nYHu*/
+
+/*
+Author : Himateja
+Editor : Codepen
+Permissions : Open Source
+*/
+
+/* --------INPUT LOGIN----------  */
+
+
+md-input-container label {
+  color: white;
+} */
+
+When the input is focused
+md-input-container.md-input-focused label {
+  color: white;
+}
+
+/* ----------------------------- */
+
+
+
+*,
+*:after,
+*:before 
+{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html, body 
+{
+	position: relative;
+	height: 100%;
+	width: 100%;
+  background-image: URL("images/fondo3.jpg");
+
+	/* color: rgba(0,0,0,0.6); */
+	font-family: RobotoDraft,Roboto;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+body header {
+	position: relative;
+	width: 100%;
+	height: 80px;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+	background: rgb(255, 255, 255);
+	font-size: 30px;
+	font-weight: 300;
+	color: rgba(12, 12, 12, 0.993);
+	text-align: center;
+	line-height: 75px;
+}
+
+.login {
+position: relative;
+    padding: 10px;
+    margin: 150px auto 80px auto;
+    width: 400px;
+    height: 480px;
+    border-radius: 3px;
+  
+    background: rgb(255, 255, 255, .80);
+    box-shadow: 0 10px 5px 0 rgba(0,0,0,0.26);
+    overflow: hidden;
+}
+
+.login > i {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	float: right;
+	cursor: pointer;
+}
+
+.login .photo {
+position: relative;
+border-radius: 50%;
+
+}
+
+
+
+/*  */
+
+.login > span {
+	display: block;
+	text-align: center;
+	margin: -15px 0;
+	font-size: 15px;
+}
+
+
+
+.form-group {
+  position: relative;
+  margin-top: 35px;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  display: block;
+  height: 36px;
+  width: 100%;
+  border: none;
+  border-radius: 0 !important;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 300;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(117, 117, 117, 0.15);
+}
+
+.form-control:focus {
+  border-bottom: 2px solid rgb(3, 169, 245);
+  outline: none;
+  box-shadow: none;
+}
+
+.form-highlight {
+  position: absolute;
+  height: 60%;
+  width: 60px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.form-control:focus ~ .form-highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+.float-label {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-size: 16px;
+  color: #999;
+  font-weight: 300;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.form-control:focus ~ .float-label, .form-control:valid ~ .float-label {
+  top: -15px;
+  font-size: 12px;
+}
+
+
+
+
+
+input[type=checkbox]
+{
+    display: none;
+    visibility: hidden;
+}
+
+input[type="checkbox"] + label
+{
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+input[type="checkbox"] + label:before
+{
+    display: inline-block;
+    content: "";
+    margin: 0 15px 3px 0px;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border: 2px solid #5a5a5a;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+input[type=checkbox]:checked + label:before
+{
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjIwcHgiIGhlaWdodD0iMTVweCIgdmlld0JveD0iMCAwIDIwIDE1Ij4NCjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iNy4xNDMsMTQuOTM4IDAsNy43OTYgMi4wMjEsNS43NzYgNy4xNDMsMTAuODk4IDE3Ljk3OSwwLjA2MiAyMCwyLjA4MiAiLz4NCjwvc3ZnPg0K');
+    background-color: rgb(3, 169, 245);
+    border-color: rgb(3, 169, 245);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    -webkit-background-size: 11px auto;
+    -moz-background-size: 11px auto;
+    -o-background-size: 11px auto;
+    background-size: 11px auto;
+}
+
+
+
+piePagina {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 30px;
+	margin-left: -10px;
+	line-height: 29px;
+	text-align: center;
+	cursor: pointer;
+	border-top: 1px solid rgba(117, 117, 117, 0.15);
+}
+
+piePagina a {
+	display: block;
+	text-decoration: none;
+	font-size: 12px;
+	color: inherit;
+}
+
+piePagina a:hover {
+	color: rgba(0,0,0,0.9);
+	text-decoration: underline;
+}
+
+piePagina a:focus {
+	outline: none;
+}
+
+.copyright {
+	position: fixed;
+	width: 100%;
+	bottom: 5px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.copyright a {
+  text-decoration: none;
+  color: rgb(3, 169, 245);
+}
+
+.copyright a:hover {
+  transition: none;
+  border-bottom: 1px solid rgb(3, 169, 245);
+}
+
+/* -- highlighter animation --------------------------- */
+@-webkit-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to { width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to { width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to { width:0; background:transparent; }
+}
+
+@-webkit-keyframes user-head {
+100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+	-moz-transform:scale(1);
+} }
+@-moz-keyframes user-head {
+100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+	-moz-transform:scale(1);
+} }
+@keyframes user-head {
+100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+	-moz-transform:scale(1);
+} }
+
+@-webkit-keyframes user-body {
+100% {
+	-webkit-transform:translateY(2px);
+	transform:translateY(2px);
+	-moz-transform:translateY(2px);
+} }
+@-moz-keyframes user-body {
+100% {
+	-webkit-transform:translateY(2px);
+	transform:translateY(2px);
+	-moz-transform:translateY(2px);
+} }
+@keyframes user-body {
+100% {
+	-webkit-transform:translateY(2px);
+	transform:translateY(2px);
+	-moz-transform:translateY(2px);
+} }
+

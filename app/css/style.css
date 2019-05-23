@@ -1,0 +1,124 @@
+.header md-toolbar md-icon.md-default-theme {
+  color: white; 
+  }
+.main-toolbar{
+  position:fixed !important;
+}
+#logoWraper img {
+width: 100%;
+height: 100%;
+}
+#logoWraper {
+  width: 325px;
+  height: 300px;
+}
+.side-menu-logo{
+  width: 240px;
+  height: 225px;
+  display: block;
+  margin: 0 auto;
+  padding-top: 55px;
+}
+.footer-powered-by{
+  font-size: 16px; font-weight: bold; opacity: 0.4;
+  display: block;
+  margin: 0 auto;
+}
+.footer-project-name{
+  font-size: 16px;
+}
+.main-header {
+  position: relative;
+  z-index: 2;
+}
+.main-sidenav {
+  position: relative;
+  z-index: 1;
+}
+md-option:focus{
+    color: black;
+}
+.ng-hide {
+  height: 0;
+  width: 0;
+  background-color: transparent;
+  top:-200px;
+  left: 200px;
+}
+
+/*=========================   Estilos para sub-Items de menu sideNav===========================================*/  
+.md-sidemenu-wrapper {
+  height: 0;
+}
+.md-sidemenu-wrapper.md-active {
+  height: auto;
+}
+.md-chips .md-chip-input-container md-autocomplete input {
+    width: 400px;
+}
+
+/*=========================   Estilos para el Header y footer =================================================*/
+/**{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+*:after,
+*:before{
+  box-sizing: border-box;
+}*/
+
+.wrapper{
+  display: flex;
+  flex-direction: column;            
+  height: 100vh;
+  overflow: hidden;
+}
+.header{
+  flex: 0 0 auto;  
+  /*background: #aaa;*/
+}
+.content{
+  flex: 1 1 auto;     
+  overflow-y: auto;     
+  background: #f0f5f5;
+}
+.footer{
+  flex: 0 0 auto;  
+  /*background: #aaa;*/
+}
+/*Estilos para tamaños de los iconos ======================================================================================================*/
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/*Estilos para loading spinner ======================================================================================================*/
+.whirl {
+  position: relative;
+}
+.whirl:before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #999999;   /* //#999999 */
+  opacity: 0.3;
+}
+
+.whirl.no-overlay:before {
+  content: none;
+  display: none;
+}
+.md-progress-circular {
+    margin: auto;
+    margin-top: 0px; /* If circular does not appear at the center, change this value. */
+    position: relative;
+}

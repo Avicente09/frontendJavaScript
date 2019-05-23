@@ -1,0 +1,80 @@
+<div>
+    <br/>
+    <center>
+        <h3>{{vm.tituloVista}}</h3>
+    </center>
+</div>
+
+
+<md-card class="md-whiteframe-10dp">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <span>Aplicación</span>
+        </div>
+    </md-toolbar>
+
+    <!--================================Contenido del componente Card =============================================================================-->
+    <md-card-content ng-class="{'whirl line': vm.isLoading() }">
+        <form name="vm.guardarForm" validate ng-submit="vm.guardarForm.$valid && vm.save()" autocomplete="off">
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-icon-float md-block" flex-gt-sm>
+                    <label>Nombre Aplicación</label>
+                    <md-icon class="material-icons">description</md-icon>
+                    <input name="nombreAplicacion" ng-model="vm.aplicacion.nombreAplicacion" required>
+                    <div class="errors" ng-messages="vm.guardarForm.nombreAplicacion.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-icon-float md-block" flex-gt-sm>
+                    <label>URL de acceso</label>
+                    <md-icon class="material-icons">description</md-icon>
+                    <input name="urlAcceso" ng-model="vm.aplicacion.urlAcceso" required>
+                    <div class="errors" ng-messages="vm.guardarForm.urlAcceso.$error">
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-icon-float md-block" flex-gt-sm>
+                    <md-icon class="material-icons">account_circle</md-icon>
+                    <label>Descripción</label>
+                    <textarea type="text" name="descripcion" ng-model="vm.aplicacion.descripcion" required md-maxlength="150" rows="2" md-select-on-focus></textarea>
+                    <div class="errors" ng-messages="vm.guardarForm.descripcion.$error">
+                        <div ng-message="md-maxlength">El campo debe contener menos de 150 caracteres</div>
+                        <div ng-message="required">Este campo es requerido</div>
+                    </div>
+                </md-input-container>
+
+            </div>
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-icon-float md-block" flex-gt-sm>
+                    <md-icon class="material-icons">crop_original</md-icon>
+                   
+                    <input ng-model="vm.iconoAplicacion" onchange="angular.element(this).scope().file_changed(this)" type="file" accept="image/*" />
+                </md-input-container>
+
+            </div>
+
+            <center>
+                <md-progress-circular md-mode="indeterminate" ng-show="vm.isLoading()" md-diameter="70"></md-progress-circular>
+            </center>
+
+
+            <div layout="row" layout-align="end" flex>
+                <md-button ng-click="vm.regresar()" class=" md-raised">Regresar</md-button>
+                <md-button ng-submit="vm.save()" md-colors="{background: 'seguridad-50'}" class=" md-raised" type="submit">Guardar</md-button>
+            </div>
+        </form>
+
+    </md-card-content>
+
+    <!--================================================Footer de compenente Card================================================-->
+
+    <md-card-footer ng-class="{'whirl line': vm.isLoading() }">
+
+    </md-card-footer>
+</md-card>

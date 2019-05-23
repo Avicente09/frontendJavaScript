@@ -1,0 +1,42 @@
+
+
+<!--================================================================== Dialogs - Pop up- ==================================================================================-->
+
+<md-dialog aria-label="Autocomplete Dialog Example">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Autocomplete Dialog Example</h2>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content ng-cloak>
+    <div class="md-dialog-content">
+      <form ng-submit="$event.preventDefault()">
+        <p>Use <code>md-autocomplete</code> to search for matches from local or remote data sources.</p>
+        <md-autocomplete
+            md-selected-item="vm.selectedItem"
+            md-search-text="vm.searchText"
+            md-items="item in vm.querySearch(vm.searchText)"
+            md-item-text="vm.item.display"
+            md-min-length="0"
+            placeholder="What is your favorite US state?"
+            md-autofocus>
+          <md-item-template>
+            <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{vm.item.display}}</span>
+          </md-item-template>
+          <md-not-found>
+            No states matching "{{vm.searchText}}" were found.
+          </md-not-found>
+        </md-autocomplete>
+      </form>
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <md-button aria-label="Finished" ng-click="vm.finish($event)">Finished</md-button>
+  </md-dialog-actions>
+</md-dialog>
+
+    <script src="app/components/dialogs/buscarPersonaDialogController.js"></script>
